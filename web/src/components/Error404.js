@@ -30,10 +30,14 @@ const styleB = {
     backgroundColor: '#232323'
 }
 
-export const Error404 = () => {
+export const Error404 = ({ msg }) => {
     return (
         <div style={styles}>
-            <h1 style={styleH}>PAGE NOT FOUND 404</h1>
+            <h1 style={styleH}>
+            {
+                msg ? <h1 style={styleH}>{msg}</h1> : 'PAGE NOT FOUND 404'
+            }
+            </h1>
             <button style={styleB}>GO BACK TO HOME</button>
         </div>
     ) 

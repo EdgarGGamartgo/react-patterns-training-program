@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { 
+import {
   TopNav,
   A,
   Active,
@@ -14,7 +14,7 @@ import { NavOptions, ResultsSort } from './../__mocks__'
 import { connect } from 'react-redux'
 import { fetchMovies } from './../redux'
 
-const NavBar = ({ fetchMoviesRequest }) => {
+const NavBar = ({ fetchMoviesRequest, msg }) => {
 
   const [sorting, setSorting] = useState('')
 
@@ -29,40 +29,44 @@ const NavBar = ({ fetchMoviesRequest }) => {
     }
   }
 
-    return (
-      <TopNav>
-        {
-          NavOptions.map(option => {
-            return (
-              option.active 
+  return (
+    <TopNav>
+      {
+        NavOptions.map(option => {
+          return (
+            option.active
               ? <Active key={option.id}>{option.name}</Active>
-              : <A onClick={() => sortHandler(option.name)}  key={option.id}>{option.name}</A>
-            )
-          }) 
+              : <A onClick={() => sortHandler(option.name)} key={option.id}>{option.name}</A>
+          )
+        })
+      }
+      <DropDown>
+        <DropButton>{sorting}<Arrow /></DropButton>
+        <DropDownContent>
+          {
+            ResultsSort.map(option => <DropDownParagrapgh onClick={() => sortHandler(option.name)} key={option.id}>{option.name}</DropDownParagrapgh>)
+          }
+        </DropDownContent>
+      </DropDown>
+      <SortParagrapgh>
+        {
+          msg ? msg : 'SORT BY'
         }
-        <DropDown>
-          <DropButton>{sorting}<Arrow/></DropButton>
-          <DropDownContent>
-            {
-              ResultsSort.map(option => <DropDownParagrapgh onClick={() => sortHandler(option.name)} key={option.id}>{option.name}</DropDownParagrapgh>) 
-            }
-          </DropDownContent>
-        </DropDown>
-        <SortParagrapgh>SORT BY</SortParagrapgh>
-      </TopNav>  
-    )
+      </SortParagrapgh>
+    </TopNav>
+  )
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-      fetchMoviesRequest: (filters) => dispatch(fetchMovies(filters))
+    fetchMoviesRequest: (filters) => dispatch(fetchMovies(filters))
   }
 }
 
 const mapStateToProps = state => {
   return {
-      movies: state.movie.movies,
-      load: state.movie.loading
+    movies: state.movie.movies,
+    load: state.movie.loading
   }
 }
 

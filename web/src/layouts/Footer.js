@@ -1,10 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types';
 
-const Footer = ({ className }) => {
+const Footer = ({ className, msg }) => {
     return (
         <div className={className}>
-            <p>netflixroulette</p>
+            <p>
+                {
+                    msg ? msg : 'netflixroulette'
+                }
+            </p>
         </div>            
     )
 }
